@@ -1,8 +1,8 @@
-service: cienemaworld
+service: filmsworld
 
 custom:
   settings:
-    POSTS_TABLE: movies
+    POSTS_TABLE: films
 
 provider:
   name: aws

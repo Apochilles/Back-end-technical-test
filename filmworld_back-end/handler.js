@@ -3,7 +3,7 @@ const AWS = require("aws-sdk");
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
 const { v4: uuidv4 } = require("uuid");
 
-const cinemaworldTable = process.env.POSTS_TABLE;
+const filmworldTable = process.env.POSTS_TABLE;
 // Create a response
 function response(statusCode, message) {
   return {
@@ -42,16 +42,11 @@ module.exports.createFilm = (event, context, callback) => {
     userId: 1,
     title: reqBody.title,
     body: reqBody.body,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
   };
 
   return db
     .put({
-      TableName: cinemaworldTable,
+      TableName: filmworldTable,
       Item: film,
     })
     .promise()
@@ -64,7 +59,7 @@ module.exports.createFilm = (event, context, callback) => {
 module.exports.getAllFilms = (event, context, callback) => {
   return db
     .scan({
-      TableName: cinemaworldTable,
+      TableName: filmworldTable,
     })
     .promise()
     .then((res) => {
@@ -81,7 +76,7 @@ module.exports.getFilms = (event, context, callback) => {
 
       "Access-Control-Allow-Credentials": true,
     },
-    TableName: cinemaworldTable,
+    TableName: filmworldTable,
     Limit: numberOfPosts,
   };
   return db
@@ -100,12 +95,7 @@ module.exports.getFilm = (event, context, callback) => {
     Key: {
       id: id,
     },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
-    TableName: cinemaworldTable,
+    TableName: filmworldTable,
   };
 
   return db
@@ -127,12 +117,7 @@ module.exports.updateFilm = (event, context, callback) => {
     Key: {
       id: id,
     },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
-    TableName: cinemaworldTable,
+    TableName: filmworldTable,
     ConditionExpression: "attribute_exists(id)",
     UpdateExpression: "SET title = :title, body = :body",
     ExpressionAttributeValues: {
@@ -159,12 +144,7 @@ module.exports.deleteFilm = (event, context, callback) => {
     Key: {
       id: id,
     },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
-    TableName: cinemaworldTable,
+    TableName: filmworldTable,
   };
   return db
     .delete(params)
