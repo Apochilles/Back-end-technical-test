@@ -1,0 +1,76 @@
+service: cienemaworld
+
+custom:
+  settings:
+    POSTS_TABLE: movies
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-southeast-2
+  environment: ${self:custom.settings}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.POSTS_TABLE}"
+
+functions:
+  createFilm:
+    handler: handler.createFilm
+    events:
+      - http:
+          path: /film
+          method: post
+  getAllFilms:
+    handler: handler.getAllFilms
+    events:
+      - http:
+          path: /films
+          method: get
+  getFilms:
+    handler: handler.getFilms
+    events:
+      - http:
+          path: /films/{number}
+          method: get
+  getFilm:
+    handler: handler.getFilm
+    events:
+      - http:
+          path: /film/{id}
+          method: get
+  updateFilm:
+    handler: handler.updateFilm
+    events:
+      - http:
+          path: /film/{id}
+          method: put
+  deleteFilm:
+    handler: handler.deleteFilm
+    events:
+      - http:
+          path: /film/{id}
+          method: delete
+
+resources:
+  Resources:
+    PostsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.settings.POSTS_TABLE}
