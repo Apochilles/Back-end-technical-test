@@ -154,3 +154,32 @@ module.exports.deleteFilm = (event, context, callback) => {
     )
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
+
+module.exports.csvExportHandler = (event, context, callback) => {
+const axios = require("axios");
+const { parse } = require("json2csv");
+const fs = require("fs");
+
+const config = {
+  method: "get",
+  url: "https://spxc62p1r2.execute-api.ap-southeast-2.amazonaws.com/dev/films/",
+};
+axios(config)
+  .then(function (response) {
+    const res = response.data;
+    const csv = parse(res);
+    fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
+    console.log(csv);
+   
+    const s3 = new S3();
+
+    s3.upload({
+      Bucket: 'bucket name',
+      Key: 'filename.csv',
+      Body: csvText
+    }).promise();
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
