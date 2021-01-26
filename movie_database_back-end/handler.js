@@ -170,11 +170,6 @@ module.exports.deleteFilm = (event, context, callback) => {
     Key: {
       id: id,
     },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
     TableName: tableName,
   };
   return db
