@@ -1,13 +1,12 @@
 # Back-end-technical
 
-
 There are 3 API operations available for 2 popular movie databases, films
 
-·/api/{cinemaworld or filmworld}/movies : This returns the movies that are available
+https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/{cinemaworld or filmworld}/movies : This returns the movies that are available
 
-·/api/{cinemaworld or filmworld}/movie/{ID}: This returns the details of a single movie
+https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/{cinemaworld or filmworld}/movie/{ID}: This returns the details of a single movie
 
-·/api/{cinemaworld or filmworld}/movie: Post a movie to the endpoint
+https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev{cinemaworld or filmworld}/movie: Post a movie to the endpoint
 
 
 Exercise
