@@ -187,15 +187,20 @@ module.exports.csvExport = (event, context, callback) => {
   const fs = require("fs");
   const AWS = require("aws-sdk");
 
-  const config = {
-    method: "get",
-    url:
-      "https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/cinemaworld/movies/",
-  };
-  axios(config)
-    .then(function (response) {
-      const res = response.data;
-      const csv = parse(res);
+  Promise.all([
+    axios.get(
+      "https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/cinemaworld/movies/"
+    ),
+
+    axios.get(
+      "https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/filmworld/movies/"
+    ),
+  ])
+
+    .then((responseArray) => {
+      const newArray = [...responseArray[0].data, ...responseArray[1].data];
+      console.log(newArray);
+      const csv = parse(newArray);
       fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
       console.log(csv);
 
