@@ -3,7 +3,8 @@ const AWS = require("aws-sdk");
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
 const { v4: uuidv4 } = require("uuid");
 
-const filmworldTable = process.env.POSTS_TABLE;
+const cinemaworldTable = process.env.CINEMAWORLD_TABLE;
+const filmworldTable = process.env.FILMWORLD_TABLE;
 // Create a response
 function response(statusCode, message) {
   return {
@@ -19,7 +20,7 @@ function sortByPrice(a, b) {
 }
 
 // Create a movie
-module.exports.createFilm = (event, context, callback) => {
+module.exports.createMovie = (event, context, callback) => {
   const reqBody = JSON.parse(event.body);
 
   if (
@@ -56,7 +57,7 @@ module.exports.createFilm = (event, context, callback) => {
     .catch((err) => response(null, response(err.statusCode, err)));
 };
 
-module.exports.getAllFilms = (event, context, callback) => {
+module.exports.getAllMovies = (event, context, callback) => {
   return db
     .scan({
       TableName: filmworldTable,
@@ -68,7 +69,7 @@ module.exports.getAllFilms = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Get number of posts
-module.exports.getFilms = (event, context, callback) => {
+module.exports.getMovies = (event, context, callback) => {
   const numberOfFilms = event.pathParameters.number;
   const params = {
     headers: {
@@ -88,7 +89,7 @@ module.exports.getFilms = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Get a single post
-module.exports.getFilm = (event, context, callback) => {
+module.exports.getMovie = (event, context, callback) => {
   const id = event.pathParameters.id;
 
   const params = {
@@ -108,7 +109,7 @@ module.exports.getFilm = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Update a post
-module.exports.updateFilm = (event, context, callback) => {
+module.exports.updateMovie = (event, context, callback) => {
   const id = event.pathParameters.id;
   const reqBody = JSON.parse(event.body);
   const { body, title } = reqBody;
@@ -138,7 +139,7 @@ module.exports.updateFilm = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Delete a post
-module.exports.deleteFilm = (event, context, callback) => {
+module.exports.deleteMovie = (event, context, callback) => {
   const id = event.pathParameters.id;
   const params = {
     Key: {
@@ -155,31 +156,32 @@ module.exports.deleteFilm = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 
-module.exports.csvExportHandler = (event, context, callback) => {
-const axios = require("axios");
-const { parse } = require("json2csv");
-const fs = require("fs");
+module.exports.csvExport = (event, context, callback) => {
+  const axios = require("axios");
+  const { parse } = require("json2csv");
+  const fs = require("fs");
 
-const config = {
-  method: "get",
-  url: "https://spxc62p1r2.execute-api.ap-southeast-2.amazonaws.com/dev/films/",
+  const config = {
+    method: "get",
+    url:
+      "https://spxc62p1r2.execute-api.ap-southeast-2.amazonaws.com/dev/films/",
+  };
+  axios(config)
+    .then(function (response) {
+      const res = response.data;
+      const csv = parse(res);
+      fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
+      console.log(csv);
+
+      const s3 = new S3();
+
+      s3.upload({
+        Bucket: "bulkmovies",
+        Key: "bulk_movies.csv",
+        Body: csv,
+      }).promise();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
-axios(config)
-  .then(function (response) {
-    const res = response.data;
-    const csv = parse(res);
-    fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
-    console.log(csv);
-   
-    const s3 = new S3();
-
-    s3.upload({
-      Bucket: 'bucket name',
-      Key: 'filename.csv',
-      Body: csvText
-    }).promise();
-
-  })
-  .catch(function (error) {
-    console.log(error);
-  });

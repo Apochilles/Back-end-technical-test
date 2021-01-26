@@ -1,14 +1,17 @@
-service: filmsworld
+service: film_database
 
 custom:
   settings:
-    POSTS_TABLE: films
+    CINEMAWORLD_TABLE: movies,
+    FILMWORLD_TABLE: movies
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: ap-southeast-2
-  environment: ${self:custom.settings}
+  environment: 
+     CINEMAWORLD_TABLE: { "Ref": "Cinemaworld" }
+     FILMWORLD_TABLE: { "Ref": "Filmworld" }
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -26,7 +29,7 @@ functions:
     handler: handler.createFilm
     events:
       - http:
-          path: /film
+          path: /movie
           method: post
           cors: true
 
@@ -34,7 +37,7 @@ functions:
     handler: handler.getAllFilms
     events:
       - http:
-          path: /films
+          path: /movies
           method: get
           cors:
             origin: "*"
@@ -50,7 +53,7 @@ functions:
     handler: handler.getFilms
     events:
       - http:
-          path: /films/{number}
+          path: /movies/{number}
           method: get
           cors: true
 
@@ -58,7 +61,7 @@ functions:
     handler: handler.getFilm
     events:
       - http:
-          path: /film/{id}
+          path: /movie/{id}
           method: get
           cors: true
 
@@ -66,7 +69,7 @@ functions:
     handler: handler.updateFilm
     events:
       - http:
-          path: /film/{id}
+          path: /movie/{id}
           method: put
           cors: true
 
@@ -74,18 +77,13 @@ functions:
     handler: handler.deleteFilm
     events:
       - http:
-          path: /film/{id}
+          path: /movie/{id}
           method: delete
           cors: true
-  csvExportHandler:
-    handler: handler.hello
-    events:
-      # Provide the ARN of your queue
-      - sqs: arn:aws:sqs:us-east-1:123456789012:queue1
 
 resources:
   Resources:
-    PostsTable:
+    Cinemaworld:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -97,4 +95,17 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:custom.settings.POSTS_TABLE}
+        TableName: ${self:custom.settings.CINEMAWORLD_TABLE}
+        Filmworld:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.settings.FILMWORLD_TABLE}
