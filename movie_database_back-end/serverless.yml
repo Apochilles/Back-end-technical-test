@@ -15,15 +15,20 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
+        - s3:ListBucket
         - dynamodb:DescribeTable
         - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
       Resource:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.CINEMAWORLD_TABLE}"
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.FILMWORLD_TABLE}"
+        - arn:aws:s3:::test/*
 
 functions:
   createFilm:
@@ -33,6 +38,7 @@ functions:
           path: /{database}/movie
           method: post
           cors: true
+          authorizer: aws_iam
 
   getAllFilms:
     handler: handler.getAllFilms
@@ -41,22 +47,28 @@ functions:
           path: /{database}/movies
           method: get
           cors:
-            origin: "*"
+            origins:
+              - "http://localhost:5500/"
             headers:
+              - Accept
+              - Origin
+              - DNT
+              - User-Agent
+              - Referer
               - Content-Type
               - X-Amz-Date
+              - x-amz-date
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
-              - X-Amz-User-Agent
             allowCredentials: false
+            authorizer: aws_iam
   getFilms:
     handler: handler.getFilms
     events:
       - http:
           path: /{database}/movies/{number}
           method: get
-          cors: true
 
   getFilm:
     handler: handler.getFilm
@@ -64,7 +76,6 @@ functions:
       - http:
           path: /{database}/movie/{id}
           method: get
-          cors: true
 
   updateFilm:
     handler: handler.updateFilm
@@ -72,7 +83,6 @@ functions:
       - http:
           path: /{database}/movie/{id}
           method: put
-          cors: true
 
   deleteFilm:
     handler: handler.deleteFilm
@@ -80,7 +90,7 @@ functions:
       - http:
           path: /{database}/movie/{id}
           method: delete
-          cors: true
+
   csvExport:
     handler: handler.csvExport
     events:

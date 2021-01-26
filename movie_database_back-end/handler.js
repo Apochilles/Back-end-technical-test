@@ -10,6 +10,10 @@ function response(statusCode, message) {
   return {
     statusCode: statusCode,
     body: JSON.stringify(message),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
   };
 }
 
@@ -39,7 +43,7 @@ module.exports.createFilm = (event, context, callback) => {
     return callback(
       null,
       response(400, {
-        error: "Film must have a title and body and they must not be empty",
+        error: "Movie must have a title and body and they must not be empty",
       })
     );
   }
@@ -47,14 +51,9 @@ module.exports.createFilm = (event, context, callback) => {
   const film = {
     id: uuidv4(),
     createdAt: new Date().toISOString(),
-    userId: 1,
     title: reqBody.title,
     body: reqBody.body,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
+    price: reqBody.price,
   };
 
   const tableName = databaseVariable(event);
@@ -64,11 +63,17 @@ module.exports.createFilm = (event, context, callback) => {
       TableName: tableName,
       Item: film,
     })
+
     .promise()
     .then(() => {
       callback(null, response(201, film));
     })
-    .catch((err) => response(null, response(err.statusCode, err)));
+    .catch((err) =>
+      response(
+        null,
+        response(err.statusCode, err, "No movies are available right now")
+      )
+    );
 };
 
 module.exports.getAllFilms = (event, context, callback) => {
@@ -84,16 +89,11 @@ module.exports.getAllFilms = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Get number of posts
+// Get number of movies
 module.exports.getFilms = (event, context, callback) => {
   const numberOfFilms = event.pathParameters.number;
   const tableName = databaseVariable(event);
   const params = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
-    },
     TableName: tableName,
     Limit: numberOfPosts,
   };
@@ -113,11 +113,6 @@ module.exports.getFilm = (event, context, callback) => {
   const params = {
     Key: {
       id: id,
-    },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-
-      "Access-Control-Allow-Credentials": true,
     },
     TableName: tableName,
   };
@@ -198,9 +193,10 @@ module.exports.csvExport = (event, context, callback) => {
 
   const config = {
     method: "get",
-    url: "arn:aws:sqs:ap-southeast-2:939450071149:CsvTransactionQueue/",
+    url:
+      "https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/cinemaworld/movies/",
   };
-  axios(config)i
+  axios(config)
     .then(function (response) {
       const res = response.data;
       const csv = parse(res);
