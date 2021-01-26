@@ -105,7 +105,7 @@ module.exports.getFilms = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Get a single post
+// Get a single movie
 module.exports.getFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const tableName = databaseVariable(event);
@@ -126,7 +126,7 @@ module.exports.getFilm = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Update a post
+// Update a movie
 module.exports.updateFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const reqBody = JSON.parse(event.body);
@@ -162,7 +162,7 @@ module.exports.updateFilm = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Delete a post
+// Delete a movie
 module.exports.deleteFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const tableName = databaseVariable(event);
@@ -185,6 +185,7 @@ module.exports.csvExport = (event, context, callback) => {
   const axios = require("axios");
   const { parse } = require("json2csv");
   const fs = require("fs");
+  const AWS = require("aws-sdk");
 
   const config = {
     method: "get",
@@ -198,7 +199,7 @@ module.exports.csvExport = (event, context, callback) => {
       fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
       console.log(csv);
 
-      const s3 = new S3();
+      const s3 = new AWS.S3();
 
       s3.upload({
         Bucket: "bulkmovies",

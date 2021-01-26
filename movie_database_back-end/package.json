@@ -10,9 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-s3": "^2.0.5",
+    "aws-sdk": "^2.831.0",
     "axios": "^0.21.1",
     "fs": "0.0.1-security",
     "json2csv": "^5.0.5",
+    "s3": "^4.4.0",
     "uuid": "^8.3.2"
   }
 }

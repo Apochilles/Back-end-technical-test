@@ -6,7 +6,7 @@
     },
     "provider": {
       "name": "aws",
-      "runtime": "nodejs12.x",
+      "runtime": "nodejs10.x",
       "region": "ap-southeast-2",
       "environment": {
         "CINEMAWORLD_TABLE": {
@@ -34,7 +34,7 @@
           "Resource": [
             "arn:aws:dynamodb:ap-southeast-2:*:table/CinemaWorld",
             "arn:aws:dynamodb:ap-southeast-2:*:table/FilmWorld",
-            "arn:aws:s3:::test/*"
+            "arn:aws:s3:::bulkmovies/*"
           ]
         }
       ],
@@ -254,10 +254,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.createFilm",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-createFilm",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -289,10 +289,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.getAllFilms",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-getAllFilms",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -324,10 +324,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.getFilms",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-getFilms",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -359,10 +359,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.getFilm",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-getFilm",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -394,10 +394,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.updateFilm",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-updateFilm",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -429,10 +429,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.deleteFilm",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-deleteFilm",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -464,10 +464,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z/filmdatabase.zip"
+                "S3Key": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z/filmdatabase.zip"
               },
               "Handler": "handler.csvExport",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs10.x",
               "FunctionName": "filmdatabase-dev-csvExport",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -492,74 +492,74 @@
               "CsvExportLogGroup"
             ]
           },
-          "GetAllFilmsLambdaVersiontxppuLBSDGoiAjoT1rjIR5bm48YBDafWoM0KTCGsso": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "GetAllFilmsLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "GetFilmsLambdaVersionbOpxMlY8ClfHw0zBK2zEQMRHcZHGPbyH41SGpslY2CM": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "GetFilmsLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "GetFilmLambdaVersionwqtLWHNr1nsGACiYNVLTpXKU2m50EUWoC7ELky8s": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "GetFilmLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "UpdateFilmLambdaVersionOv9L7Pa7bklvIvciVV1LVnb2WI4VhdM9Z8eQDz9sIo": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "UpdateFilmLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "DeleteFilmLambdaVersionLxqkY63Q39zKCeIoenY2YgZV9zyiR03gvHmcr0iPiUI": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "DeleteFilmLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "CsvExportLambdaVersionlzuAIWQF5YGULceq0Q3hR9KAIHIAtx5U26mrpfP9CQs": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "CsvExportLambdaFunction"
-              },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
-            }
-          },
-          "CreateFilmLambdaVersion0wxB9WNOlVlXUeVhwYijUnMQmEJqDbmqY1GmLj314": {
+          "CreateFilmLambdaVersionbLPuqAMCvINvEGefIsMuN4e2om1UwCnFnbrUpNM0Ets": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateFilmLambdaFunction"
               },
-              "CodeSha256": "lKTnMYfHFHMNWil/eIctGZw6fzOF9Os01CEo523EOjs="
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "GetAllFilmsLambdaVersionDAuvnAihjwbcsyux6v12VOALsUDmqoRharrUkpseRos": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetAllFilmsLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "GetFilmsLambdaVersionGnN2M4juR0MCWAvqbE9XMZowkjRvjljceHDRVfbc9A": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetFilmsLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "CsvExportLambdaVersionnliEHqtZPpZwDF4PfBLxQFe0DHAhGLFu1fnfsnQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CsvExportLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "GetFilmLambdaVersion7UiolGInvidh9FkI0W7gaxKk55sw3V4cPoTGyUMo": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetFilmLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "DeleteFilmLambdaVersionkxKY5hAJcEUTBlNU7G48TkW2rkxxVfWhSa3X8m5vH8w": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteFilmLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
+            }
+          },
+          "UpdateFilmLambdaVersionOnzBUx1anYZ2VXRKc7xKWg8bWFrwkph6FUThHp1dMac": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateFilmLambdaFunction"
+              },
+              "CodeSha256": "98PcPwnMMFJ04tXh6zx08HAT+WrpbmdPbV9OZ2/gNYk="
             }
           },
           "ApiGatewayRestApi": {
@@ -985,7 +985,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1611635984731": {
+          "ApiGatewayDeployment1611650521893": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1294,46 +1294,46 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
+          "CreateFilmLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateFilmLambdaVersionbLPuqAMCvINvEGefIsMuN4e2om1UwCnFnbrUpNM0Ets"
+            }
+          },
           "GetAllFilmsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllFilmsLambdaVersiontxppuLBSDGoiAjoT1rjIR5bm48YBDafWoM0KTCGsso"
+              "Ref": "GetAllFilmsLambdaVersionDAuvnAihjwbcsyux6v12VOALsUDmqoRharrUkpseRos"
             }
           },
           "GetFilmsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetFilmsLambdaVersionbOpxMlY8ClfHw0zBK2zEQMRHcZHGPbyH41SGpslY2CM"
-            }
-          },
-          "GetFilmLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "GetFilmLambdaVersionwqtLWHNr1nsGACiYNVLTpXKU2m50EUWoC7ELky8s"
-            }
-          },
-          "UpdateFilmLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "UpdateFilmLambdaVersionOv9L7Pa7bklvIvciVV1LVnb2WI4VhdM9Z8eQDz9sIo"
-            }
-          },
-          "DeleteFilmLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "DeleteFilmLambdaVersionLxqkY63Q39zKCeIoenY2YgZV9zyiR03gvHmcr0iPiUI"
+              "Ref": "GetFilmsLambdaVersionGnN2M4juR0MCWAvqbE9XMZowkjRvjljceHDRVfbc9A"
             }
           },
           "CsvExportLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CsvExportLambdaVersionlzuAIWQF5YGULceq0Q3hR9KAIHIAtx5U26mrpfP9CQs"
+              "Ref": "CsvExportLambdaVersionnliEHqtZPpZwDF4PfBLxQFe0DHAhGLFu1fnfsnQ"
             }
           },
-          "CreateFilmLambdaFunctionQualifiedArn": {
+          "GetFilmLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateFilmLambdaVersion0wxB9WNOlVlXUeVhwYijUnMQmEJqDbmqY1GmLj314"
+              "Ref": "GetFilmLambdaVersion7UiolGInvidh9FkI0W7gaxKk55sw3V4cPoTGyUMo"
+            }
+          },
+          "DeleteFilmLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteFilmLambdaVersionkxKY5hAJcEUTBlNU7G48TkW2rkxxVfWhSa3X8m5vH8w"
+            }
+          },
+          "UpdateFilmLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateFilmLambdaVersionOnzBUx1anYZ2VXRKc7xKWg8bWFrwkph6FUThHp1dMac"
             }
           },
           "ServiceEndpoint": {
@@ -1492,9 +1492,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "CreateFilmLambdaVersion0wxB9WNOlVlXUeVhwYijUnMQmEJqDbmqY1GmLj314"
+        "versionLogicalId": "CreateFilmLambdaVersionbLPuqAMCvINvEGefIsMuN4e2om1UwCnFnbrUpNM0Ets"
       },
       "getAllFilms": {
         "handler": "handler.getAllFilms",
@@ -1521,7 +1521,6 @@
                   "X-Amz-Security-Token"
                 ],
                 "allowCredentials": false,
-                "authorizer": "aws_iam",
                 "methods": [
                   "OPTIONS",
                   "GET"
@@ -1535,9 +1534,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GetAllFilmsLambdaVersiontxppuLBSDGoiAjoT1rjIR5bm48YBDafWoM0KTCGsso"
+        "versionLogicalId": "GetAllFilmsLambdaVersionDAuvnAihjwbcsyux6v12VOALsUDmqoRharrUkpseRos"
       },
       "getFilms": {
         "handler": "handler.getFilms",
@@ -1554,9 +1553,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GetFilmsLambdaVersionbOpxMlY8ClfHw0zBK2zEQMRHcZHGPbyH41SGpslY2CM"
+        "versionLogicalId": "GetFilmsLambdaVersionGnN2M4juR0MCWAvqbE9XMZowkjRvjljceHDRVfbc9A"
       },
       "getFilm": {
         "handler": "handler.getFilm",
@@ -1573,9 +1572,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "GetFilmLambdaVersionwqtLWHNr1nsGACiYNVLTpXKU2m50EUWoC7ELky8s"
+        "versionLogicalId": "GetFilmLambdaVersion7UiolGInvidh9FkI0W7gaxKk55sw3V4cPoTGyUMo"
       },
       "updateFilm": {
         "handler": "handler.updateFilm",
@@ -1592,9 +1591,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "UpdateFilmLambdaVersionOv9L7Pa7bklvIvciVV1LVnb2WI4VhdM9Z8eQDz9sIo"
+        "versionLogicalId": "UpdateFilmLambdaVersionOnzBUx1anYZ2VXRKc7xKWg8bWFrwkph6FUThHp1dMac"
       },
       "deleteFilm": {
         "handler": "handler.deleteFilm",
@@ -1611,9 +1610,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "DeleteFilmLambdaVersionLxqkY63Q39zKCeIoenY2YgZV9zyiR03gvHmcr0iPiUI"
+        "versionLogicalId": "DeleteFilmLambdaVersionkxKY5hAJcEUTBlNU7G48TkW2rkxxVfWhSa3X8m5vH8w"
       },
       "csvExport": {
         "handler": "handler.csvExport",
@@ -1626,9 +1625,9 @@
         "package": {},
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs10.x",
         "vpc": {},
-        "versionLogicalId": "CsvExportLambdaVersionlzuAIWQF5YGULceq0Q3hR9KAIHIAtx5U26mrpfP9CQs"
+        "versionLogicalId": "CsvExportLambdaVersionnliEHqtZPpZwDF4PfBLxQFe0DHAhGLFu1fnfsnQ"
       }
     },
     "resources": {
@@ -1704,7 +1703,7 @@
     "artifact": "/home/apochilles-laptop/development/Back-end-technical/movie_database_back-end/.serverless/filmdatabase.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/filmdatabase/dev/1611635986745-2021-01-26T04:39:46.745Z",
+    "artifactDirectoryName": "serverless/filmdatabase/dev/1611650525050-2021-01-26T08:42:05.050Z",
     "artifact": "filmdatabase.zip"
   }
 }

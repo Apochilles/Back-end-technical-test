@@ -7,7 +7,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs10.x
   region: ap-southeast-2
   environment:
     CINEMAWORLD_TABLE: { "Ref": "Cinemaworld" }
@@ -28,7 +28,7 @@ provider:
       Resource:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.CINEMAWORLD_TABLE}"
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.FILMWORLD_TABLE}"
-        - arn:aws:s3:::test/*
+        - arn:aws:s3:::bulkmovies/*
 
 functions:
   createFilm:
@@ -62,7 +62,6 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
             allowCredentials: false
-            authorizer: aws_iam
   getFilms:
     handler: handler.getFilms
     events:
