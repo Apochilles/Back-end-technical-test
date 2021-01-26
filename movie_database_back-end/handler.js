@@ -19,8 +19,15 @@ function sortByPrice(a, b) {
   } else return 1;
 }
 
+function databaseVariable(event) {
+  const database = event.pathParameters.database;
+  if (database === "cinemaworld") {
+    return cinemaworldTable;
+  } else return filmworldTable;
+}
+
 // Create a movie
-module.exports.createMovie = (event, context, callback) => {
+module.exports.createFilm = (event, context, callback) => {
   const reqBody = JSON.parse(event.body);
 
   if (
@@ -43,11 +50,18 @@ module.exports.createMovie = (event, context, callback) => {
     userId: 1,
     title: reqBody.title,
     body: reqBody.body,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+
+      "Access-Control-Allow-Credentials": true,
+    },
   };
+
+  const tableName = databaseVariable(event);
 
   return db
     .put({
-      TableName: filmworldTable,
+      TableName: tableName,
       Item: film,
     })
     .promise()
@@ -57,10 +71,12 @@ module.exports.createMovie = (event, context, callback) => {
     .catch((err) => response(null, response(err.statusCode, err)));
 };
 
-module.exports.getAllMovies = (event, context, callback) => {
+module.exports.getAllFilms = (event, context, callback) => {
+  const tableName = databaseVariable(event);
+
   return db
     .scan({
-      TableName: filmworldTable,
+      TableName: tableName,
     })
     .promise()
     .then((res) => {
@@ -69,15 +85,16 @@ module.exports.getAllMovies = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Get number of posts
-module.exports.getMovies = (event, context, callback) => {
+module.exports.getFilms = (event, context, callback) => {
   const numberOfFilms = event.pathParameters.number;
+  const tableName = databaseVariable(event);
   const params = {
     headers: {
       "Access-Control-Allow-Origin": "*",
 
       "Access-Control-Allow-Credentials": true,
     },
-    TableName: filmworldTable,
+    TableName: tableName,
     Limit: numberOfPosts,
   };
   return db
@@ -89,14 +106,20 @@ module.exports.getMovies = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Get a single post
-module.exports.getMovie = (event, context, callback) => {
+module.exports.getFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
+  const tableName = databaseVariable(event);
 
   const params = {
     Key: {
       id: id,
     },
-    TableName: filmworldTable,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+
+      "Access-Control-Allow-Credentials": true,
+    },
+    TableName: tableName,
   };
 
   return db
@@ -109,16 +132,22 @@ module.exports.getMovie = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Update a post
-module.exports.updateMovie = (event, context, callback) => {
+module.exports.updateFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const reqBody = JSON.parse(event.body);
   const { body, title } = reqBody;
+  const tableName = databaseVariable(event);
 
   const params = {
     Key: {
       id: id,
     },
-    TableName: filmworldTable,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+
+      "Access-Control-Allow-Credentials": true,
+    },
+    TableName: tableName,
     ConditionExpression: "attribute_exists(id)",
     UpdateExpression: "SET title = :title, body = :body",
     ExpressionAttributeValues: {
@@ -139,13 +168,19 @@ module.exports.updateMovie = (event, context, callback) => {
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
 // Delete a post
-module.exports.deleteMovie = (event, context, callback) => {
+module.exports.deleteFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
+  const tableName = databaseVariable(event);
   const params = {
     Key: {
       id: id,
     },
-    TableName: filmworldTable,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+
+      "Access-Control-Allow-Credentials": true,
+    },
+    TableName: tableName,
   };
   return db
     .delete(params)
@@ -163,10 +198,9 @@ module.exports.csvExport = (event, context, callback) => {
 
   const config = {
     method: "get",
-    url:
-      "https://spxc62p1r2.execute-api.ap-southeast-2.amazonaws.com/dev/films/",
+    url: "arn:aws:sqs:ap-southeast-2:939450071149:CsvTransactionQueue/",
   };
-  axios(config)
+  axios(config)i
     .then(function (response) {
       const res = response.data;
       const csv = parse(res);

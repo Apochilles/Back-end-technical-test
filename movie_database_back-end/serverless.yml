@@ -1,17 +1,17 @@
-service: film_database
+service: filmdatabase
 
 custom:
   settings:
-    CINEMAWORLD_TABLE: movies,
-    FILMWORLD_TABLE: movies
+    CINEMAWORLD_TABLE: CinemaWorld
+    FILMWORLD_TABLE: FilmWorld
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: ap-southeast-2
-  environment: 
-     CINEMAWORLD_TABLE: { "Ref": "Cinemaworld" }
-     FILMWORLD_TABLE: { "Ref": "Filmworld" }
+  environment:
+    CINEMAWORLD_TABLE: { "Ref": "Cinemaworld" }
+    FILMWORLD_TABLE: { "Ref": "Filmworld" }
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -22,14 +22,15 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.POSTS_TABLE}"
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.CINEMAWORLD_TABLE}"
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.FILMWORLD_TABLE}"
 
 functions:
   createFilm:
     handler: handler.createFilm
     events:
       - http:
-          path: /movie
+          path: /{database}/movie
           method: post
           cors: true
 
@@ -37,7 +38,7 @@ functions:
     handler: handler.getAllFilms
     events:
       - http:
-          path: /movies
+          path: /{database}/movies
           method: get
           cors:
             origin: "*"
@@ -53,7 +54,7 @@ functions:
     handler: handler.getFilms
     events:
       - http:
-          path: /movies/{number}
+          path: /{database}/movies/{number}
           method: get
           cors: true
 
@@ -61,7 +62,7 @@ functions:
     handler: handler.getFilm
     events:
       - http:
-          path: /movie/{id}
+          path: /{database}/movie/{id}
           method: get
           cors: true
 
@@ -69,7 +70,7 @@ functions:
     handler: handler.updateFilm
     events:
       - http:
-          path: /movie/{id}
+          path: /{database}/movie/{id}
           method: put
           cors: true
 
@@ -77,9 +78,13 @@ functions:
     handler: handler.deleteFilm
     events:
       - http:
-          path: /movie/{id}
+          path: /{database}/movie/{id}
           method: delete
           cors: true
+  csvExport:
+    handler: handler.csvExport
+    events:
+      - sqs: arn:aws:sqs:ap-southeast-2:939450071149:CsvTransactionQueue
 
 resources:
   Resources:
@@ -96,7 +101,7 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.settings.CINEMAWORLD_TABLE}
-        Filmworld:
+    Filmworld:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
