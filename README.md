@@ -58,6 +58,7 @@ Code is nearly production ready but I didn't find time to unit test my applicati
 
 ####  Best practices and design patterns preferred
 
+I tried my best to implement simple and effective API design. For my code I strived for it to be as simple to intepret as possible and kept code comments to a minimum. I tried for a dry aproach to code, reusing my functions when applicable. 
 
 NOTE:
 
