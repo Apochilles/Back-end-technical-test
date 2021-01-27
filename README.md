@@ -20,9 +20,15 @@
 
 https://unruffled-villani-204af6.netlify.app/
 
+To Do:
+
+- Seperate movie by provider.
+- Have a filter that only searches for the lowest priced movie between the services.
+- Implement a fall back API for when a service fails.
+
 ### Design a solution to have a functioning app when not all of the providers are functioning at 100 %.
 
-My solution is to call both apis simultaneously. If one fails the other will provide a list of movies as a backup. If both fail the user will be notified that the service is down 
+My solution is to call both apis simultaneously. If one fails the other will provide a list of movies as a backup. If both fail the user will be notified that the service is down. 
 
 ### Export Bulk CSV of all movies for last 24 hours with a queuing mechanism to avoid failure (resilience).
 
@@ -31,8 +37,6 @@ I use a Lambda to make a call on both {database} endpoints. I then combine the a
 - The goal of the test is to allow you to present your best code that you feel proud off.
 - Feel free to make and document any assumptions you have made.
 - The API token created or used should not be exposed to the public.
-
-
 
 ## Bonus Points on:
 
