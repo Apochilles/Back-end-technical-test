@@ -10,8 +10,11 @@ function sortByPrice(a, b) {
 class App extends Component {
   state = {
     movies: [],
+    err: null,
+    isLoading: true,
   };
   componentDidMount() {
+    this.setState({ isLoading: true });
     Promise.all([
       axios.get(
         "https://pvp8rab1r9.execute-api.ap-southeast-2.amazonaws.com/dev/cinemaworld/movies/"
@@ -24,12 +27,28 @@ class App extends Component {
       .then((responseArray) => {
         const newArray = [...responseArray[0].data, ...responseArray[1].data];
         newArray.sort(sortByPrice);
-        this.setState({ movies: newArray });
+        this.setState({ movies: newArray, isLoading: false });
+
         console.log(this.state.movies);
       })
-      .catch(console.log);
+      .catch((err) => {
+        this.setState({
+          isLoading: false,
+          err,
+        });
+      });
   }
+
   render() {
+    let { movies, err, isLoading } = this.state;
+    if (err) {
+      // Here you can either render error message or Error component
+      // In this example, I have used message
+      return <div> {"Movies are unavalible: " + err.message} </div>;
+    }
+    if (isLoading) {
+      return <div> Loading... </div>;
+    }
     return (
       <div className="container">
         <div className="col-xs-12">

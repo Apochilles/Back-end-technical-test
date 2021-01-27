@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const cinemaworldTable = process.env.CINEMAWORLD_TABLE;
 const filmworldTable = process.env.FILMWORLD_TABLE;
-// Create a response
 function response(statusCode, message) {
   return {
     statusCode: statusCode,
@@ -17,12 +16,13 @@ function response(statusCode, message) {
   };
 }
 
+// sorts listing by price
 function sortByPrice(a, b) {
   if (a.price > b.price) {
     return -1;
   } else return 1;
 }
-
+// determines which {database} is relevant to the endpoint
 function databaseVariable(event) {
   const database = event.pathParameters.database;
   if (database === "cinemaworld") {
@@ -30,7 +30,7 @@ function databaseVariable(event) {
   } else return filmworldTable;
 }
 
-// Create a movie
+// Create a movie endpoint
 module.exports.createFilm = (event, context, callback) => {
   const reqBody = JSON.parse(event.body);
 
@@ -68,14 +68,9 @@ module.exports.createFilm = (event, context, callback) => {
     .then(() => {
       callback(null, response(201, film));
     })
-    .catch((err) =>
-      response(
-        null,
-        response(err.statusCode, err, "No movies are available right now")
-      )
-    );
+    .catch((err) => response(null, response(err.statusCode, err)));
 };
-
+// Get all films from one {database}
 module.exports.getAllFilms = (event, context, callback) => {
   const tableName = databaseVariable(event);
 
@@ -89,7 +84,7 @@ module.exports.getAllFilms = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Get number of movies
+// Get number of movies from one {database}
 module.exports.getFilms = (event, context, callback) => {
   const numberOfFilms = event.pathParameters.number;
   const tableName = databaseVariable(event);
@@ -105,7 +100,7 @@ module.exports.getFilms = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Get a single movie
+// Get a single movie from one {database}
 module.exports.getFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const tableName = databaseVariable(event);
@@ -126,7 +121,7 @@ module.exports.getFilm = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Update a movie
+// Update a single movie from one {database
 module.exports.updateFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const reqBody = JSON.parse(event.body);
@@ -162,7 +157,7 @@ module.exports.updateFilm = (event, context, callback) => {
     })
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
-// Delete a movie
+// Delete a single movie from one {database
 module.exports.deleteFilm = (event, context, callback) => {
   const id = event.pathParameters.id;
   const tableName = databaseVariable(event);
@@ -180,6 +175,7 @@ module.exports.deleteFilm = (event, context, callback) => {
     )
     .catch((err) => callback(null, response(err.statusCode, err)));
 };
+// Imports both {database} endpoints, combines the response in an array, converts it to CSV and sends it to S3 via SQS (queueing service)
 
 module.exports.csvExport = (event, context, callback) => {
   const axios = require("axios");
@@ -200,6 +196,7 @@ module.exports.csvExport = (event, context, callback) => {
     .then((responseArray) => {
       const newArray = [...responseArray[0].data, ...responseArray[1].data];
       console.log(newArray);
+      // function to sort data by the last 24h hours
       const csv = parse(newArray);
       fs.writeFile("bulk_movies.csv", csv, { flag: "a+" }, (err) => {});
       console.log(csv);
