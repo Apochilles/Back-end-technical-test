@@ -14,18 +14,18 @@
 ### Posts a movie to the endpoint
 
 
-Exercise
+## Exercise
 
 
-## Build a web app to allow customers to get the cheapest price for movies from these two providers in a timely manner.
+### Build a web app to allow customers to get the cheapest price for movies from these two providers in a timely manner.
 
 https://unruffled-villani-204af6.netlify.app/
 
-## Design a solution to have a functioning app when not all of the providers are functioning at 100 %.
+### Design a solution to have a functioning app when not all of the providers are functioning at 100 %.
 
 My solution is to call both apis simultaneously. If one fails the other will provide a list of movies as a backup. If both fail the user will be notified that the service is down 
 
-## Export Bulk CSV of all movies for last 24 hours with a queuing mechanism to avoid failure (resilience).
+### Export Bulk CSV of all movies for last 24 hours with a queuing mechanism to avoid failure (resilience).
 
 I use a Lambda to make a call on both {database} endpoints. I then combine the arrays, convert them to CSV and sent them to an S3 bucket via an SQS queue.
 
@@ -35,29 +35,29 @@ I use a Lambda to make a call on both {database} endpoints. I then combine the a
 
 
 
-Bonus Point on:
+## Bonus Points on:
 
-##  AWS platform usage like Lambda Functions and it’s other services to achieve the goal and create Infrastructure as a code to configure AWS through the codebase (Can use free AWS account)
+-  AWS platform usage like Lambda Functions and it’s other services to achieve the goal and create Infrastructure as a code to configure AWS through the codebase (Can use free AWS account)
 
 My entire back end is hosted in AWS on Lambdas. For a queuing mechanism I use SQS and the for the exported CSV I use an S3 bucket. For authentication I used IAM and plan to implement Cognito is the future 
 
-·         Serverless/Terraform or any other (Good to have but optional)
+-        Serverless/Terraform or any other (Good to have but optional)
 
 My entire backend uses Serverless as SAAS.
 
-·         Can use NodeJS or PHP (Laravel). — NODE.js preferred
+-         Can use NodeJS or PHP (Laravel). — NODE.js preferred
 
 I use Node for every aspect of this project. 
 
-·         Frequent code checkin in git repo
+-         Frequent code checkin in git repo
 
 I check in regualrly and with meaningful commit names.
 
-·         Production ready code with basic Unit Testing coverage
+-        Production ready code with basic Unit Testing coverage
 
 Code is nearly production ready but I didn't find time to unit test my application.
 
-·         Best practices and design patterns preferred
+-         Best practices and design patterns preferred
 
 
 NOTE:
