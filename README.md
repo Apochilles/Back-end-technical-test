@@ -41,41 +41,41 @@ I use a Lambda to make a call on both {database} endpoints. I then combine the a
 
 My entire back end is hosted in AWS on Lambdas. For a queuing mechanism I use SQS and the for the exported CSV I use an S3 bucket. For authentication I used IAM and plan to implement Cognito is the future 
 
--        Serverless/Terraform or any other (Good to have but optional)
+-  Serverless/Terraform or any other (Good to have but optional)
 
 My entire backend uses Serverless as SAAS.
 
--         Can use NodeJS or PHP (Laravel). — NODE.js preferred
+- Can use NodeJS or PHP (Laravel). — NODE.js preferred
 
 I use Node for every aspect of this project. 
 
--         Frequent code checkin in git repo
+- Frequent code checkin in git repo
 
 I check in regualrly and with meaningful commit names.
 
--        Production ready code with basic Unit Testing coverage
+- Production ready code with basic Unit Testing coverage
 
 Code is nearly production ready but I didn't find time to unit test my application.
 
--         Best practices and design patterns preferred
+- Best practices and design patterns preferred
 
 
 NOTE:
 
-·         Intent is to check the problem solving skills, code quality, awareness of technologies & Backend development experiences
+- Intent is to check the problem solving skills, code quality, awareness of technologies & Backend development experiences
 
-·         Avoid spending too much time to make it bug free or fully functional. Usually 2-3 hours are sufficient enough
+- Avoid spending too much time to make it bug free or fully functional. Usually 2-3 hours are sufficient enough
 
-·         For storing Data, you can use mysql or a JSON file/object whichever saves time
+- For storing Data, you can use mysql or a JSON file/object whichever saves time
 
-·         A basic frontend will be preferred using boiler plate with 80% focus on Backend
+- A basic frontend will be preferred using boiler plate with 80% focus on Backend
 
-·         FAQ:
+##         FAQ:
 
-o    In regards to API keys and simulating unavailability, it could be difficult to achieve this with a best practise & secure 3rd party auth provider
+-    In regards to API keys and simulating unavailability, it could be difficult to achieve this with a best practise & secure 3rd party auth provider
 
-§  Totally fine. Just mention with comments wherever applicable to let us know your thoughts within the code
+  Totally fine. Just mention with comments wherever applicable to let us know your thoughts within the code
 
-o    Will it be a problem if there is a chance that both “cinemaworld” and “filmworld” fail at the same time because of the random simulated downstream failures I hard code?
+-    Will it be a problem if there is a chance that both “cinemaworld” and “filmworld” fail at the same time because of the random simulated downstream failures I hard code?
 
-§  Open to any ideas or approach. Document where ever needed and shall be fine
+  Open to any ideas or approach. Document where ever needed and shall be fine
