@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+function sortByPrice(a, b) {
+  if (a.price > b.price) {
+    return -1;
+  } else return 1;
+}
+
 class App extends Component {
   state = {
     movies: [],
@@ -17,6 +23,7 @@ class App extends Component {
     ])
       .then((responseArray) => {
         const newArray = [...responseArray[0].data, ...responseArray[1].data];
+        newArray.sort(sortByPrice);
         this.setState({ movies: newArray });
         console.log(this.state.movies);
       })
