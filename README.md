@@ -36,27 +36,27 @@ I use a Lambda to make a call on both {database} endpoints. I then combine the a
 
 ## Bonus Points on:
 
--  AWS platform usage like Lambda Functions and it’s other services to achieve the goal and create Infrastructure as a code to configure AWS through the codebase (Can use free AWS account)
+####  AWS platform usage like Lambda Functions and it’s other services to achieve the goal and create Infrastructure as a code to configure AWS through the codebase (Can use free AWS account)
 
 My entire back end is hosted in AWS on Lambdas. For a queuing mechanism I use SQS and the for the exported CSV I use an S3 bucket. For authentication I used IAM and plan to implement Cognito is the future 
 
--  Serverless/Terraform or any other (Good to have but optional)
+####   Serverless/Terraform or any other (Good to have but optional)
 
 My entire backend uses Serverless as SAAS.
 
-- Can use NodeJS or PHP (Laravel). — NODE.js preferred
+####  Can use NodeJS or PHP (Laravel). — NODE.js preferred
 
 I use Node for every aspect of this project. 
 
-- Frequent code checkin in git repo
+####  Frequent code checkin in git repo
 
 I check in regualrly and with meaningful commit names.
 
-- Production ready code with basic Unit Testing coverage
+####  Production ready code with basic Unit Testing coverage
 
 Code is nearly production ready but I didn't find time to unit test my application.
 
-- Best practices and design patterns preferred
+####  Best practices and design patterns preferred
 
 
 NOTE:
